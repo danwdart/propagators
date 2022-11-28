@@ -46,14 +46,14 @@ instance PropagatedNum Integer where
       else do
         watch x $ \ a -> write y (c `div` a)
         watch y $ \ b -> write x (c `div` b)
-       
-      
+
+
       -- propagate backwards with div?
 
 instance PropagatedNum (Supported Integer) where
   ctimes x y z = do
     lift2 (*) x y z
-    watch z $ \c -> 
+    watch z $ \c ->
       when (c == 0) $ do
         watch x $ \ a -> when (a /= 0) $ write y 0
         watch y $ \ b -> when (b /= 0) $ write x 0

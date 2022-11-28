@@ -41,7 +41,7 @@ instance Num a => Num (Supported a) where
   signum = fmap signum
   negate = fmap negate
   fromInteger = pure . fromInteger
-  
+
 instance Fractional a => Fractional (Supported a) where
   (/) = liftA2 (/)
   recip = fmap recip

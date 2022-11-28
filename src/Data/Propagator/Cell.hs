@@ -41,7 +41,7 @@ write :: Cell s a -> a -> ST s ()
 write (Cell m r) a' = join $ atomicModifyMutVar' r $ \case
   (Nothing, ns) -> ((Just a', ns), ns a')
   old@(Just a, ns) -> case m a a' of
-    Contradiction xs e 
+    Contradiction xs e
       | HashSet.null xs -> (old, fail e)
       | e == ""         -> (old, fail "contradiction")
       | otherwise       -> (old, fail (e ++ ", supported by: " ++ intercalate ", " (show <$> toList xs)))
