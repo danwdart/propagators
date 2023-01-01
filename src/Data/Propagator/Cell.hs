@@ -1,19 +1,19 @@
-{-# LANGUAGE RankNTypes #-}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE LambdaCase          #-}
+{-# LANGUAGE RankNTypes          #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE TypeSynonymInstances #-}
-{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE TypeFamilies        #-}
+
+{-# LANGUAGE FlexibleInstances   #-}
 
 module Data.Propagator.Cell where
 
-import Control.Monad
-import Control.Monad.ST
-import Data.Foldable
-import qualified Data.HashSet as HashSet
-import Data.List (intercalate)
-import Data.Primitive.MutVar
-import Data.Propagator.Class
+import           Control.Monad
+import           Control.Monad.ST
+import           Data.Foldable
+import qualified Data.HashSet          as HashSet
+import           Data.List             (intercalate)
+import           Data.Primitive.MutVar
+import           Data.Propagator.Class
 
 -- | A 'Cell' contains "information about a value" rather than a value per se.
 data Cell s a = Cell

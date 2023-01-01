@@ -1,8 +1,8 @@
-{-# LANGUAGE DeriveFunctor #-}
-{-# LANGUAGE DeriveFoldable #-}
-{-# LANGUAGE DeriveTraversable #-}
+
+
 {-# LANGUAGE DefaultSignatures #-}
-{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE DeriveTraversable #-}
+
 {-# LANGUAGE FlexibleInstances #-}
 
 module Data.Propagator.Class
@@ -11,12 +11,12 @@ module Data.Propagator.Class
   , mergeDefault
   ) where
 
-import Control.Applicative
-import Control.Monad
-import Data.HashSet
-import Data.Propagator.Name
-import Numeric.Interval.Internal (Interval(..))
-import Numeric.Natural
+import           Control.Applicative
+import           Control.Monad
+import           Data.HashSet
+import           Data.Propagator.Name
+import           Numeric.Interval.Internal (Interval (..))
+import           Numeric.Natural
 
 -- | This represents the sorts of changes we can make as we accumulate information
 -- in a 'Data.Propagator.Cell.Cell'.
@@ -34,8 +34,8 @@ data Change a
 instance Applicative Change where
   pure = Change False
   Change m f <*> Change n a = Change (m || n) (f a)
-  Contradiction m n <*> _ = Contradiction m n
-  _ <*> Contradiction m n = Contradiction m n
+  Contradiction m n <*> _   = Contradiction m n
+  _ <*> Contradiction m n   = Contradiction m n
 
 instance Alternative Change where
   empty = Contradiction mempty "contradiction"
@@ -46,7 +46,7 @@ instance Alternative Change where
 instance Monad Change where
   return = Change False
   Change m a >>= f = case f a of
-    Change n b -> Change (m || n) b
+    Change n b        -> Change (m || n) b
     Contradiction s n -> Contradiction s n
   Contradiction s n >>= _ = Contradiction s n
   fail = Contradiction mempty
@@ -102,7 +102,7 @@ instance (Propagated a, Propagated b) => Propagated (a, b) where
 instance (Propagated a, Propagated b) => Propagated (Either a b) where
   merge (Left a)  (Left b)  = Left <$> merge a b
   merge (Right a) (Right b) = Right <$> merge a b
-  merge _ _ = fail "Left /= Right"
+  merge _ _                 = fail "Left /= Right"
 
 -- | Propagated interval arithmetic
 instance (Num a, Ord a) => Propagated (Interval a) where

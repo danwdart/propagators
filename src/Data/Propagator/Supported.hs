@@ -1,10 +1,10 @@
 {-# LANGUAGE DeriveTraversable #-}
 module Data.Propagator.Supported where
 
-import Control.Applicative
-import Data.HashSet
-import Data.Propagator.Class
-import Data.Propagator.Name
+import           Control.Applicative
+import           Data.HashSet
+import           Data.Propagator.Class
+import           Data.Propagator.Name
 
 data Supported a = Supported !(HashSet Name) a
   deriving (Functor, Foldable, Traversable, Show)
@@ -17,20 +17,20 @@ instance Ord a => Ord (Supported a) where
 
 instance Applicative Supported where
   pure = Supported mempty
-  Supported xs a <*  Supported ys _ = Supported (union xs ys) a
-  Supported xs _  *> Supported ys b = Supported (union xs ys) b
-  Supported xs f <*> Supported ys a = Supported (union xs ys) (f a)
+  Supported xs a <*  Supported ys _ = Supported (xs `union` ys) a
+  Supported xs _  *> Supported ys b = Supported (xs `union` ys) b
+  Supported xs f <*> Supported ys a = Supported (xs `union` ys) (f a)
 
 instance Monad Supported where
   return = Supported mempty
   (>>) = (*>)
   Supported xs a >>= f = case f a of
-    Supported ys b -> Supported (union xs ys) b
+    Supported ys b -> Supported (xs `union` ys) b
 
 instance Propagated a => Propagated (Supported a) where
   merge (Supported xs a) (Supported ys b) = case merge a b of
     Change False c     -> Change False (Supported xs c)
-    Change True c      -> Change True  (Supported (union xs ys) c)
+    Change True c      -> Change True  (Supported (xs `union` ys) c)
     Contradiction zs s -> Contradiction (zs `union` xs `union` ys) s
 
 instance Num a => Num (Supported a) where

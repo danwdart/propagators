@@ -1,6 +1,6 @@
 {-# LANGUAGE Trustworthy #-}
-{-# LANGUAGE UnboxedTuples #-}
-{-# LANGUAGE MagicHash #-}
+
+{-# LANGUAGE MagicHash   #-}
 -- | Inspired by the names in nominal adapton.
 module Data.Propagator.Name
   ( Name
@@ -13,14 +13,14 @@ module Data.Propagator.Name
   , height
   ) where
 
-import Control.Concurrent.Unique
-import Control.Monad.Primitive
-import Data.Bits
-import Data.Hashable
-import Data.String
-import GHC.Prim
-import System.Mem.StableName
-import GHC.Exts(Any)
+import           Control.Concurrent.Unique
+import           Control.Monad.Primitive
+import           Data.Bits
+import           Data.Hashable
+import           Data.String
+import           GHC.Exts                  (Any)
+import           GHC.Prim
+import           System.Mem.StableName
 
 data Name
   = U {-# UNPACK #-} !Unique
@@ -35,7 +35,7 @@ instance Eq Name where
   S i s     == S j t     = i == j && s == t
   P i _ p q == P j _ r s = i == j && p == r && q == s
   C i _ m p == C j _ n q = i == j && m == n && p == q
-  _ == _ = False
+  _ == _                 = False
 
 instance Show Name where
   showsPrec _ (U i)       = showString "#" . showsPrec 11 (hash i)
@@ -46,23 +46,23 @@ instance Show Name where
 
 -- | Has a negative binomial distribution. Same for any forked children.
 height :: Name -> Int
-height (U i)   = ffs (hash i)
-height (SN i)  = ffs (hashStableName i)
-height (S i _) = ffs i
+height (U i)       = ffs (hash i)
+height (SN i)      = ffs (hashStableName i)
+height (S i _)     = ffs i
 height (P _ h _ _) = h
 height (C _ h _ _) = h
 {-# INLINE height #-}
 
 instance Hashable Name where
-  hashWithSalt d (U i) = hashWithSalt d i
-  hashWithSalt d (SN i) = hashWithSalt d i
-  hashWithSalt d (S i _) = hashWithSalt d i
+  hashWithSalt d (U i)       = hashWithSalt d i
+  hashWithSalt d (SN i)      = hashWithSalt d i
+  hashWithSalt d (S i _)     = hashWithSalt d i
   hashWithSalt d (P i _ _ _) = hashWithSalt d i
   hashWithSalt d (C i _ _ _) = hashWithSalt d i
   {-# INLINE hashWithSalt #-}
-  hash (U i) = hash i
-  hash (SN i) = hashStableName i
-  hash (S i _) = i
+  hash (U i)       = hash i
+  hash (SN i)      = hashStableName i
+  hash (S i _)     = i
   hash (P i _ _ _) = i
   hash (C i _ _ _) = i
   {-# INLINE hash #-}

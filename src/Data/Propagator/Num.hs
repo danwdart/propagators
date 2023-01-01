@@ -1,16 +1,16 @@
 {-# LANGUAGE DefaultSignatures #-}
-{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE LambdaCase        #-}
+
 module Data.Propagator.Num where
 
-import Control.Monad
-import Control.Monad.ST
-import Data.Propagator.Cell
-import Data.Propagator.Class
-import Data.Propagator.Supported
-import Numeric.Natural
-import Numeric.Interval.Internal
+import           Control.Monad
+import           Control.Monad.ST
+import           Data.Propagator.Cell
+import           Data.Propagator.Class
+import           Data.Propagator.Supported
+import           Numeric.Interval.Internal
+import           Numeric.Natural
 
 class Propagated a => PropagatedNum a where
   cplus :: Cell s a -> Cell s a -> Cell s a -> ST s ()

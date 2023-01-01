@@ -1,12 +1,12 @@
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE RankNTypes #-}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE DefaultSignatures #-}
+{-# LANGUAGE GADTs               #-}
+{-# LANGUAGE RankNTypes          #-}
+
+{-# LANGUAGE TypeFamilies        #-}
+
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE TypeSynonymInstances #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE Unsafe #-}
+
+{-# LANGUAGE FlexibleInstances   #-}
+{-# LANGUAGE Unsafe              #-}
 
 module Data.Propagator.Prop
   ( Prop(..)
@@ -15,18 +15,18 @@ module Data.Propagator.Prop
   , forwards, backwards
   ) where
 
-import Control.Monad
-import Control.Monad.Primitive
-import Control.Monad.ST
-import Data.Foldable
-import qualified Data.HashMap.Strict as HM
-import Data.HashMap.Strict (HashMap)
-import Data.Propagator.Class
-import Data.Propagator.Cell
-import Data.Propagator.Num
-import Data.Proxy
-import Data.Reify
-import Unsafe.Coerce
+import           Control.Monad
+import           Control.Monad.Primitive
+import           Control.Monad.ST
+import           Data.Foldable
+import           Data.HashMap.Strict     (HashMap)
+import qualified Data.HashMap.Strict     as HM
+import           Data.Propagator.Cell
+import           Data.Propagator.Class
+import           Data.Propagator.Num
+import           Data.Proxy
+import           Data.Reify
+import           Unsafe.Coerce
 
 -- | This type allows us to write seemingly normal functional code and glue it together out of smaller
 -- propagator templates. Evaluation of these expressions uses <www.ittc.ku.edu/~andygill/papers/reifyGraph.pdf Observable Sharing>.
@@ -121,8 +121,7 @@ data ACell s where
 
 buildACell :: forall s. DerefProp s Int -> ST s (ACell s)
 buildACell (DerefNullary u) = do
-  x <- u
-  return (ACell x)
+  ACell <$> u
 buildACell (DerefUnary (Proxy :: Proxy b) _ _) = do
   (x :: Cell s b) <- cell
   return (ACell x)
