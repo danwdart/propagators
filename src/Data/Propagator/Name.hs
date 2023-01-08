@@ -1,6 +1,5 @@
-{-# LANGUAGE Trustworthy #-}
-
 {-# LANGUAGE MagicHash   #-}
+{-# LANGUAGE Trustworthy #-}
 -- | Inspired by the names in nominal adapton.
 module Data.Propagator.Name
   ( Name

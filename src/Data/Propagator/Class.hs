@@ -2,9 +2,7 @@
 
 {-# LANGUAGE DefaultSignatures #-}
 {-# LANGUAGE DeriveTraversable #-}
-
 {-# LANGUAGE FlexibleInstances #-}
-
 module Data.Propagator.Class
   ( Change(..)
   , Propagated(..)

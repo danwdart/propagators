@@ -1,11 +1,8 @@
+{-# LANGUAGE FlexibleInstances   #-}
 {-# LANGUAGE GADTs               #-}
 {-# LANGUAGE RankNTypes          #-}
-
-{-# LANGUAGE TypeFamilies        #-}
-
 {-# LANGUAGE ScopedTypeVariables #-}
-
-{-# LANGUAGE FlexibleInstances   #-}
+{-# LANGUAGE TypeFamilies        #-}
 {-# LANGUAGE Unsafe              #-}
 
 module Data.Propagator.Prop

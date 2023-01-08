@@ -1,9 +1,8 @@
+{-# LANGUAGE FlexibleInstances   #-}
 {-# LANGUAGE LambdaCase          #-}
 {-# LANGUAGE RankNTypes          #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeFamilies        #-}
-
-{-# LANGUAGE FlexibleInstances   #-}
 
 module Data.Propagator.Cell where
 
